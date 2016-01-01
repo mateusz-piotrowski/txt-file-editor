@@ -15,6 +15,14 @@ struct record
 
 struct record data;
 
+void start()
+{
+    printf("\n Program starting\n");
+    printf("\n\n [press any key to continue...]\n");
+    getchar();
+    system("clear");
+}
+
 int main(void)
 {
     printf("Hello World\n");
