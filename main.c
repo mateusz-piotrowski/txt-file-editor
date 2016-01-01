@@ -203,8 +203,43 @@ void end_program()
     printf("\n   [press any key to exit...]\n");
 }
 
-int main(void)
+int main()
 {
-    printf("Hello World\n");
+    char symbol;
+
+    start();
+
+    menu();
+
+    do
+    {
+        symbol = getchar();
+        switch (symbol)
+        {
+        case '0':
+            end_program();
+            return 0;
+        case '1':
+            read_data_char_by_char();
+            break;
+        case '2':
+            read_data_by_line();
+            break;
+        case '3':
+            write_to_file();
+            break;
+
+        default:
+            printf("Access Denied");
+            printf("\n [press any key...]\n");
+
+            system("clear");
+            menu();
+            break;
+        }
+    }
+
+    while (symbol != 0);
+
     return 0;
 }
