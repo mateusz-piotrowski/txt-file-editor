@@ -1,0 +1,8 @@
+3#Plus GSM#65#Simplus 10#
+2#Era#124#Tak Tak 50#
+3#Plus GSM#67#Simplus 50#
+1#Orange#21#Pop 10#
+2#Era#127#Tak Tak 100#
+1#Orange#23#Pop 50#
+3#Plus GSM#66#Simplus 20#
+1#Orange#22#Pop 20#
