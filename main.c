@@ -140,6 +140,62 @@ void read_data_by_line(void)
     menu();
 }
 
+void write_to_file(void)
+{
+    FILE *fp;
+    if ((fp=fopen("database.txt", "a+"))==NULL)
+    {
+        printf("I can't open database file. \n");
+        exit(1);
+    }
+
+    system("clear");
+/*
+    printf("Podaj id operatora: \n");
+    scanf("%d", data.id_operator);
+
+    printf("Podaj nazwe operatora: \n");
+//   fgets(fp, 49, stdin);
+    scanf("%s", data.name_operator);
+
+    printf("Podaj id produktu: \n");
+    scanf("%d", data.id_product);
+
+    printf("Podaj nazwe produktu: \n");
+    scanf("%s", data.name_product);
+*/
+//    fwrite(data.id_operator, sizeof(char), strlen(data.id_operator), fp);
+   /*
+        fwrite("#",sizeof(char), 1, fp);
+        fwrite(&data.name_operator,sizeof(char), strlen(data.name_operator),fp);
+        fwrite("#\n",sizeof(char),2, fp);
+        fwrite(data.id_product, sizeof(int), strlen(data.id_product), fp);
+        fwrite("#",sizeof(char), 1, fp);
+        fwrite(&data.name_product,sizeof(char), strlen(data.name_product),fp);
+        fwrite("#\n",sizeof(char),2, fp);
+   */
+
+
+        fprintf(fp, "%d", data.id_operator);
+        fprintf(fp, "%s", "#");
+
+        fprintf(fp, "%s", &data.name_operator);
+        fprintf(fp, "%s", "#");
+
+        fprintf(fp, "%d", data.id_product);
+        fprintf(fp, "%s", "#");
+        fprintf(fp, "%s", &data.name_product);
+        fprintf(fp, "%s", "#\n");
+
+    //fwrite("#\n", sizeof(char), sizeof("#\n"), fp);
+
+   //fprintf(fp, "%d#%s#%d#%s#\n", data.id_operator, data.name_operator, data.id_product, data.name_product);
+
+    fclose(fp);
+    system("clear");
+    menu();
+}
+
 int main(void)
 {
     printf("Hello World\n");
