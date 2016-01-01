@@ -196,6 +196,13 @@ void write_to_file(void)
     menu();
 }
 
+void end_program()
+{
+    system("clear");
+    printf("\n Program was closed...\n");
+    printf("\n   [press any key to exit...]\n");
+}
+
 int main(void)
 {
     printf("Hello World\n");
