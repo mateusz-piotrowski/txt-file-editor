@@ -3,14 +3,14 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdio_ext.h>
+
+#define NAME_OPERATOR 50
+#define NAME_PRODUCT 50
 
 struct record
 {
-    int id_operator;
-    char name_operator;
-    int id_product;
-    char name_product;
+    char id_operator[4];
+    char id_product[4];
 };
 
 struct record data;
@@ -37,35 +37,39 @@ void menu()
 
 void read_data_char_by_char()
 {
-    FILE *fp;
-    if ((fp=fopen("database.txt", "r"))==NULL)
-    {
-        printf("I can't open database file.\n");
-        exit(1);
-    }
 
-    int symbols;
+  system("clear");
 
-    system("clear");
+  printf("\n Zawartosc pliku database.txt\n");
 
-    printf("\n Database file:\n");
+  int symbols;
+  int sign;
+  int lines = 0;
 
-    symbols = getc(fp);
+  FILE *fp;
+  if ((fp=fopen("database.txt", "r")) == NULL)
+  {
+      printf("I can't open file for read-only\n");
+      exit(1);
+  }
 
-    while(symbols != EOF)
-    {
-        printf( "%c", symbols );
-        symbols = getc(fp);
-    }
+  printf("\n");
 
-    fclose(fp);
+  while( symbols != EOF )
+  {
+      printf( "%c", symbols );
+      symbols = getc(fp);
+  }
 
-    printf("%s", "\n [ press any key...]\n");
+  getchar();
+  getchar();
 
-    getchar();
+  fclose(fp);
+  system("clear");
+  menu();
 }
 
-void read_data_by_line(void)
+void read_data_by_line()
 {
     FILE *fp;
     if ((fp=fopen("database.txt", "r"))==NULL)
@@ -76,13 +80,13 @@ void read_data_by_line(void)
 
     system("clear");
 
-    int symbols = 0;
+    int choises = 0;
     int lines = 0;
 
-    while(symbols != EOF)
+    while(choises != EOF)
     {
-        symbols = getc(fp);
-        if (symbols == '\n')
+        choises = getc(fp);
+        if (choises == '\n')
             lines = lines+1;
     }
 
@@ -99,9 +103,9 @@ void read_data_by_line(void)
         czytnik = getc(fp);
         while ( czytnik != '#' )
         {
-            czytnik == id_operatoratora;
-            printf("%d", id_operatoratora );
-            //symbols = getc(fp);
+            czytnik == data.data.id_operatoratora;
+            printf("%d", data.data.id_operatoratora );
+            //choises = getc(fp);
         }
     */
     int tmp = 0;
@@ -140,60 +144,92 @@ void read_data_by_line(void)
     menu();
 }
 
-void write_to_file(void)
+void delete_enter(char *input)
 {
-    FILE *fp;
-    if ((fp=fopen("database.txt", "a+"))==NULL)
+  int size = sizeof(input);
+  for (int i = 0; i < size; i++)
+  {
+    if (input[i] == '\n')
     {
-        printf("I can't open database file. \n");
+      input[i] = '#';
+    }
+  }
+}
+
+int write_to_file()
+{
+    system("clear");
+
+    FILE *fp;
+    if ((fp=fopen("database.txt", "a+")) == NULL)
+    {
+        printf("I can't open database file.\n");
         exit(1);
     }
 
-    system("clear");
-/*
-    printf("Podaj id operatora: \n");
-    scanf("%d", data.id_operator);
+  char *name_operator = malloc(NAME_OPERATOR);
+    if (name_operator == NULL)
+    {
+      printf ("No memory\n");
+      return 1;
+    }
 
-    printf("Podaj nazwe operatora: \n");
-//   fgets(fp, 49, stdin);
-    scanf("%s", data.name_operator);
+  char *name_product = malloc(NAME_PRODUCT);
+    if (name_product == NULL)
+    {
+      printf ("No memory\n");
+      return 1;
+    }
 
-    printf("Podaj id produktu: \n");
-    scanf("%d", data.id_product);
+  printf("Insert id of operator:\n");
+  fgets(data.id_operator, sizeof(data.id_operator), stdin);
 
-    printf("Podaj nazwe produktu: \n");
-    scanf("%s", data.name_product);
-*/
-//    fwrite(data.id_operator, sizeof(char), strlen(data.id_operator), fp);
-   /*
-        fwrite("#",sizeof(char), 1, fp);
-        fwrite(&data.name_operator,sizeof(char), strlen(data.name_operator),fp);
-        fwrite("#\n",sizeof(char),2, fp);
-        fwrite(data.id_product, sizeof(int), strlen(data.id_product), fp);
-        fwrite("#",sizeof(char), 1, fp);
-        fwrite(&data.name_product,sizeof(char), strlen(data.name_product),fp);
-        fwrite("#\n",sizeof(char),2, fp);
-   */
+  if ((strlen(data.id_operator)>0) && (data.id_operator[strlen(data.id_operator) - 1] == '\n'))
+      data.id_operator[strlen(data.id_operator) - 1] = '#';
 
+  printf("Insert name of operator:\n");
+  fgets(name_operator, NAME_OPERATOR, stdin);
 
-        fprintf(fp, "%d", data.id_operator);
-        fprintf(fp, "%s", "#");
+  if ((strlen(name_operator)>0) && (name_operator[strlen(name_operator) - 1] == '\n'))
+      name_operator[strlen(name_operator) - 1] = '#';
 
-        fprintf(fp, "%s", &data.name_operator);
-        fprintf(fp, "%s", "#");
+  printf("Insert id of product:\n");
+  fgets(data.id_product, sizeof(data.id_product), stdin);
 
-        fprintf(fp, "%d", data.id_product);
-        fprintf(fp, "%s", "#");
-        fprintf(fp, "%s", &data.name_product);
-        fprintf(fp, "%s", "#\n");
+  if ((strlen(data.id_product)>0) && (data.id_product[strlen(data.id_product) - 1] == '\n'))
+      data.id_product[strlen(data.id_product) - 1] = '#';
 
-    //fwrite("#\n", sizeof(char), sizeof("#\n"), fp);
+  printf("Insert name of product:\n");
+  fgets(name_product, NAME_PRODUCT, stdin);
 
-   //fprintf(fp, "%d#%s#%d#%s#\n", data.id_operator, data.name_operator, data.id_product, data.name_product);
+  if ((strlen(name_product)>0) && (name_product[strlen(name_product) - 1] == '\n'))
+      name_product[strlen(name_product) - 1] = '#';
 
+  //  printf("\n");
+
+  //  printf("%s", data.data.id_operator);
+  //  printf("%s", name_operator);
+  //  printf("%c", '#');
+  //  printf("%s", data.data.data.id_product);
+  //  printf("%s", name_product);
+  //  printf("%c", '#');
+
+  //  printf("\n\n");
+
+    fprintf(fp, "%s", data.id_operator);
+    fprintf(fp, "%s", name_operator);
+    fprintf(fp, "%s", data.id_product);
+    fprintf(fp, "%s", name_product);
+    fprintf(fp, "%c", '\n');
+
+    free(name_operator);
+    free(name_product);
     fclose(fp);
+    printf("\n   Inserted data was saved.\n\n   [Press any key...]");
+    fgetc(stdin);
     system("clear");
     menu();
+    return 0;
 }
 
 void end_program()
@@ -205,41 +241,48 @@ void end_program()
 
 int main()
 {
-    char symbol;
 
     start();
 
     menu();
 
+     int choise;
+    //  atoi(choise);
+
     do
     {
-        symbol = getchar();
-        switch (symbol)
+      // choise = fgetc(stdin);
+        // fgets(choise, sizeof(choise), stdin);
+        // choise = fgetc(stdin);
+        scanf("%d", &choise);
+
+        switch (choise)
         {
-        case '0':
+          case 0:
             end_program();
             return 0;
-        case '1':
+          case 1:
             read_data_char_by_char();
             break;
-        case '2':
+            //return 0;
+          case 2:
             read_data_by_line();
             break;
-        case '3':
+          //  return 0;
+          case 3:
             write_to_file();
-            break;
-
-        default:
+              break;
+          //  return 0;
+          default:
             printf("Access Denied");
             printf("\n [press any key...]\n");
-
-            system("clear");
             menu();
             break;
+          //  return 0;
         }
     }
 
-    while (symbol != 0);
+    while (choise != 0);
 
     return 0;
 }
