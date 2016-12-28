@@ -72,7 +72,7 @@ void read_data_char_by_char()
 void read_data_by_line()
 {
     FILE *fp;
-    if ((fp=fopen("database.txt", "r"))==NULL)
+    if ((fp = fopen("database.txt", "r")) == NULL)
     {
         printf("I can't open database file.\n");
         exit(1);
@@ -87,11 +87,11 @@ void read_data_by_line()
     {
         choises = getc(fp);
         if (choises == '\n')
-            lines = lines+1;
+          lines = lines+1;
     }
 
     printf("\n Database file: \n");
-    printf("\nLP   Data: \n\n");
+    printf("\n Number   Data: \n\n");
 
     int i = 1;
     const int max_n = 300;
@@ -121,17 +121,17 @@ void read_data_by_line()
 
         if (result != 0)
         {
-            printf("%d    %s", i, caption);
+            printf("%d       %s", i, caption);
             if (feof (fp))
             {
                 printf ("\n %d End of file \n", i);
             }
-        }
-        else
+        } else {
             printf ("\n%d read error\n", i);
+        }
     }
 
-    printf("\n Number of rows in database file --> %d \n", lines);
+    printf("\n Number of rows in database file --> %d \n", i-1);
 
     fclose(fp);
 
@@ -155,7 +155,6 @@ void delete_enter(char *input)
     }
   }
 }
-
 int write_to_file()
 {
     system("clear");
@@ -167,25 +166,19 @@ int write_to_file()
         exit(1);
     }
 
-  char *name_operator = malloc(NAME_OPERATOR);
-    if (name_operator == NULL)
-    {
-      printf ("No memory\n");
-      return 1;
-    }
-
-  char *name_product = malloc(NAME_PRODUCT);
-    if (name_product == NULL)
-    {
-      printf ("No memory\n");
-      return 1;
-    }
-
   printf("Insert id of operator:\n");
+  getchar();
   fgets(data.id_operator, sizeof(data.id_operator), stdin);
 
   if ((strlen(data.id_operator)>0) && (data.id_operator[strlen(data.id_operator) - 1] == '\n'))
       data.id_operator[strlen(data.id_operator) - 1] = '#';
+
+      char *name_operator = malloc(NAME_OPERATOR);
+        if (name_operator == NULL)
+        {
+          printf ("No memory\n");
+          return 1;
+        }
 
   printf("Insert name of operator:\n");
   fgets(name_operator, NAME_OPERATOR, stdin);
@@ -198,6 +191,13 @@ int write_to_file()
 
   if ((strlen(data.id_product)>0) && (data.id_product[strlen(data.id_product) - 1] == '\n'))
       data.id_product[strlen(data.id_product) - 1] = '#';
+
+      char *name_product = malloc(NAME_PRODUCT);
+        if (name_product == NULL)
+        {
+          printf ("No memory\n");
+          return 1;
+        }
 
   printf("Insert name of product:\n");
   fgets(name_product, NAME_PRODUCT, stdin);
@@ -226,7 +226,8 @@ int write_to_file()
     free(name_product);
     fclose(fp);
     printf("\n   Inserted data was saved.\n\n   [Press any key...]");
-    fgetc(stdin);
+    // fgetc(stdin);
+    getchar();
     system("clear");
     menu();
     return 0;
@@ -253,7 +254,8 @@ int main()
     {
       // choise = fgetc(stdin);
         // fgets(choise, sizeof(choise), stdin);
-        // choise = fgetc(stdin);
+        // choise = fgetc(stdin)
+        // choise = scanf("%d", &choise);
         scanf("%d", &choise);
 
         switch (choise)
@@ -264,25 +266,24 @@ int main()
           case 1:
             read_data_char_by_char();
             break;
-            //return 0;
+            return 0;
           case 2:
             read_data_by_line();
             break;
-          //  return 0;
+            return 0;
           case 3:
             write_to_file();
-              break;
-          //  return 0;
+            break;
+            return 0;
           default:
             printf("Access Denied");
             printf("\n [press any key...]\n");
             menu();
             break;
-          //  return 0;
+            return 0;
         }
+
     }
-
-    while (choise != 0);
-
+        while (choise != 0);
     return 0;
 }
