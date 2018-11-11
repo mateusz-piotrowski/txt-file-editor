@@ -67,6 +67,81 @@ void read_data_char_by_char()
     getchar();
 }
 
+void read_data_by_line(void)
+{
+    FILE *fp;
+    if ((fp=fopen("database.txt", "r"))==NULL) {
+        printf("I can't open database file.\n");
+        exit(1);
+    }
+    
+    system("clear");
+    
+    int symbols = 0;
+    int lines = 0;
+    
+    while(symbols != EOF) {
+        symbols = getc(fp);
+        
+        if (symbols == '\n') {
+            lines = lines+1;
+        }
+    }
+    
+    printf("\n Database file: \n");
+    printf("\nLP   Data: \n\n");
+    
+    int i = 1;
+    const int max_n = 300;
+    //const int lines = 5;
+    char caption[max_n];
+    char *result;
+    /*
+     rewind(fp);
+     czytnik = getc(fp);
+     while ( czytnik != '#' )
+     {
+     czytnik == id_operatoratora;
+     printf("%d", id_operatoratora );
+     //symbols = getc(fp);
+     }
+     */
+    int tmp = 0;
+    tmp = lines;
+    
+    rewind(fp);
+    
+    for (i = 1; i <= tmp; i++)
+    {
+        result = fgets(caption, max_n, fp);
+        //fgets(caption, max_n, fp);
+        lines++;
+        
+        if (result != 0) {
+            printf("%d    %s", i, caption);
+            if (feof (fp)) {
+                printf ("\n %d End of file \n", i);
+            }
+        }
+        else {
+            printf ("\n%d read error\n", i);
+        }
+    }
+    
+    printf("\n Number of rows in database file --> %d \n", lines);
+    
+    fclose(fp);
+    
+    printf("%s", "\n [press any key...] \n");
+    
+    getchar();
+    getchar();
+    
+    system("clear");
+    menu();
+}
+
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
