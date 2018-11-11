@@ -1,0 +1,4 @@
+*/*.xcodeproj/*
+*.txt
+database.txt
+snippets/*.*
