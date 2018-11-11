@@ -39,6 +39,34 @@ void menu() {
     printf(" \n Your choise:  ");
 }
 
+void read_data_char_by_char()
+{
+    FILE *fp;
+    if ((fp=fopen("database.txt", "r"))==NULL) {
+        printf("I can't open database file.\n");
+        exit(1);
+    }
+    
+    int symbols;
+    
+    system("clear");
+    
+    printf("\n Database file:\n");
+    
+    symbols = getc(fp);
+    
+    while(symbols != EOF) {
+        printf( "%c", symbols );
+        symbols = getc(fp);
+    }
+    
+    fclose(fp);
+    
+    printf("%s", "\n [ press any key...]\n");
+    
+    getchar();
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
