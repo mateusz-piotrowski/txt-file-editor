@@ -8,6 +8,17 @@
 
 #include <stdio.h>
 
+struct record
+{
+    int id_operator;
+    char name_operator;
+    int id_product;
+    char name_product;
+};
+
+struct record data;
+
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
