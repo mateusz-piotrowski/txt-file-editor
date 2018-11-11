@@ -28,6 +28,17 @@ void start() {
     system("clear");
 }
 
+void menu() {
+    system("clear");
+    
+    printf("Menu:\n");
+    printf(" 1. Display database from file. [char by char]\n");
+    printf(" 2. Display database from file [line number]\n");
+    printf(" 3. Write data to database\n");
+    printf(" 0. Exit program\n");
+    printf(" \n Your choise:  ");
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
